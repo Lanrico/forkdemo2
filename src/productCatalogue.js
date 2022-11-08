@@ -27,5 +27,13 @@ class Catalogue {
     return removedProduct;
   }
 
+  checkReorders() {
+    const result = { type: "Reorder", productIds: [] };
+    result.productIds = this.products
+      .filter((p) => p.quantityInStock <= p.reorderLevel)
+      .map((p) => p.id);
+    return result;
+  }
+
 }
 module.exports = Catalogue;
