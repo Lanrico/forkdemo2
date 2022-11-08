@@ -26,6 +26,7 @@ class Catalogue {
     }
     return removedProduct;
   }
+
   batchAddProducts(batch) {
     const productIDClash = batch.products.some(
       (product) => this.findProductById(product.id) !== undefined
@@ -42,5 +43,16 @@ class Catalogue {
       .reduce((acc, p) => acc + 1, 0);
     return noProductsAdded;
   }
+
+
+  checkReorders() {
+    const result = { type: "Reorder", productIds: [] };
+    result.productIds = this.products
+      .filter((p) => p.quantityInStock <= p.reorderLevel)
+      .map((p) => p.id);
+    return result;
+  }
+
+
 }
 module.exports = Catalogue;
